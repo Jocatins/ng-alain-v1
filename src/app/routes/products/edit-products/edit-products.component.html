@@ -1,0 +1,41 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+  </ng-template>
+</page-header>
+<nz-card>
+  <h3>Edit Products </h3>
+
+  <form nz-form [formGroup]="productsForm" (ngSubmit)="onSubmit($event)">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Category</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzValidatingTip="Validating...">
+        <input nz-input formControlName="category" placeholder="Category" required />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Description</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <textarea formControlName="description" nz-input rows="4" placeholder="Description"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired nzFor="number">Price</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="The input is not valid E-mail!">
+        <input nz-input formControlName="price" placeholder="price" type="number" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Rating</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzDisableAutoTips nzErrorTip="Please input your password!">
+        <input nz-input type="text" formControlName="rating" placeholder="rating" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control [nzOffset]="7" [nzSpan]="12">
+        <button nz-button nzType="primary" (click)="goBack()">Back</button>
+        <button nz-button nzType="primary">Submit</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-card>

@@ -1,0 +1,53 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <!-- <button (click)="addUser()" nz-button nzType="primary">addUser</button> -->
+  </ng-template>
+</page-header>
+<nz-card>
+  <form nz-form [formGroup]="usersForm" (ngSubmit)="onSubmit()">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Username</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzValidatingTip="Validating...">
+        <nz-input-group nzPrefixIcon="user">
+          <input nz-input formControlName="userName" placeholder="Username" required />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Mobile</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-input-group nzPrefixIcon="user">
+          <input nz-input formControlName="mobile" placeholder="mobile" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired nzFor="email">E-mail</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="The input is not valid E-mail!">
+        <nz-input-group nzPrefixIcon="user">
+          <input nz-input formControlName="email" placeholder="email" type="email" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Password</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzDisableAutoTips nzErrorTip="Please input your password!">
+        <nz-input-group nzPrefixIcon="lock">
+          <input nz-input type="password" formControlName="password" placeholder="password" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <div nz-row class="login-form-margin">
+      <div nz-col [nzSpan]="12">
+        <label nz-checkbox formControlName="remember">
+          <span>Remember me</span>
+        </label>
+      </div>
+    </div>
+    <nz-form-item>
+      <nz-form-control [nzOffset]="7" [nzSpan]="12">
+        <button nz-button nzType="primary">Submit</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-card>
