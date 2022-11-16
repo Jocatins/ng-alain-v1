@@ -1,5 +1,5 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { EditCartsComponent } from './edit-products.component';
+import { EditCartsComponent } from './edit-carts.component';
 
 describe('UpdateProductsLogComponent', () => {
     let component: EditCartsComponent;

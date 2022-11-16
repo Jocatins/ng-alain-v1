@@ -5,22 +5,17 @@ import { SFSchema } from '@delon/form';
 
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ICarts } from 'src/app/shared/models/ICarts';
-import { ProductsService } from 'src/app/shared/services/products.service';
+import { CartsService } from 'src/app/shared/services/carts.service';
 
 // Parent component
 @Component({
-    selector: 'app-edit-products',
-    templateUrl: './edit-products.component.html'
+    selector: 'app-edit-carts',
+    templateUrl: './edit-carts.component.html'
 })
 export class EditCartsComponent implements OnInit {
     @Input() product?: ICarts;
 
-    constructor(
-        private router: Router,
-        private fb: UntypedFormBuilder,
-        private route: ActivatedRoute,
-        private productService: ProductsService
-    ) {
+    constructor(private router: Router, private fb: UntypedFormBuilder, private route: ActivatedRoute, private cartsService: CartsService) {
         const state: any = router.getCurrentNavigation()?.extras.state;
         if (state?.data) {
             console.log('edit', state);
@@ -41,7 +36,7 @@ export class EditCartsComponent implements OnInit {
     }
     onSubmit(data: ICarts) {
         console.log(this.productsForm.value);
-        this.productService.updateData(data);
+        this.cartsService.updateData(data);
         alert('Submitted Successfully');
         this.goBack();
     }

@@ -144,12 +144,12 @@ export class StartupService {
                             {
                                 text: 'Carts-List',
                                 icon: { type: 'icon', value: 'profile' },
-                                link: 'products/log'
+                                link: 'carts/log'
                             },
                             {
                                 text: 'Add-Carts',
                                 icon: { type: 'icon', value: 'profile' },
-                                link: 'products/edit'
+                                link: 'carts/edit-carts'
                             }
                         ]
                     }
