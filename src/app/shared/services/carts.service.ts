@@ -5,7 +5,7 @@ import { _HttpClient } from '@delon/theme';
 
 @Injectable()
 export class CartsService {
-    private apiUrl: string = 'https://fakestoreapi.com/products';
+    private apiUrl: string = 'https://fakestoreapi.com/carts';
 
     constructor(private http: _HttpClient) {}
 

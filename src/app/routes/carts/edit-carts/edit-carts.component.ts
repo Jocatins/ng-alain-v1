@@ -13,29 +13,35 @@ import { CartsService } from 'src/app/shared/services/carts.service';
     templateUrl: './edit-carts.component.html'
 })
 export class EditCartsComponent implements OnInit {
-    @Input() product?: ICarts;
+    @Input() cartItem?: ICarts;
 
     constructor(private router: Router, private fb: UntypedFormBuilder, private route: ActivatedRoute, private cartsService: CartsService) {
         const state: any = router.getCurrentNavigation()?.extras.state;
         if (state?.data) {
-            console.log('edit', state);
-            this.product = state.data;
+            console.log('cart', state);
+            this.cartItem = state.data;
         }
     }
 
-    public productsForm!: UntypedFormGroup;
+    public cartsForm!: UntypedFormGroup;
 
     ngOnInit(): void {
         console.log(this.route.queryParams);
+        this.cartsForm = this.fb.group({
+            id: [this.cartItem?.id, [Validators.required]],
+            userId: [this.cartItem?.userId, [Validators.required]],
+            date: [this.cartItem?.date, [Validators.required]],
+            products: [this.cartItem?.products, [Validators.required]]
+        });
     }
     goBack(): void {
-        this.router.navigateByUrl('products/log');
+        this.router.navigateByUrl('carts/log');
     }
     getGreetings(): string {
         return 'hello';
     }
     onSubmit(data: ICarts) {
-        console.log(this.productsForm.value);
+        console.log(this.cartsForm.value);
         this.cartsService.updateData(data);
         alert('Submitted Successfully');
         this.goBack();

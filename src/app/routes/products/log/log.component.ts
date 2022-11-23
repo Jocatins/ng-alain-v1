@@ -8,19 +8,7 @@ import { ProductsService } from '../../../shared/services/products.service';
 // Child component
 @Component({
     selector: 'app-products-log',
-    templateUrl: './log.component.html',
-    styles: [
-        `
-            .example {
-                text-align: center;
-                background: rgba(0, 0, 0, 0.05);
-                border-radius: 4px;
-                margin-bottom: 20px;
-                padding: 30px 50px;
-                margin: 20px 0;
-            }
-        `
-    ]
+    templateUrl: './log.component.html'
 })
 export class ProductsLogComponent implements OnInit {
     @ViewChild('st') private readonly st!: STComponent;
@@ -37,6 +25,7 @@ export class ProductsLogComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        this.show('spin');
         this.getAllProducts();
     }
     addItem(value: any) {
@@ -69,7 +58,7 @@ export class ProductsLogComponent implements OnInit {
 
     show(type: LoadingType): void {
         this.loadingSrv.open({ type });
-        setTimeout(() => this.loadingSrv.close(), 1000 * 3);
+        setTimeout(() => this.loadingSrv.close(), 1000);
     }
 
     submitData(value: IProduct) {
@@ -89,6 +78,7 @@ export class ProductsLogComponent implements OnInit {
     // ================CRUD functions ========================>
     getAllProducts(): void {
         this.productsService.getData().subscribe(data => {
+            // console.log(data);
             this.products = data;
         });
     }

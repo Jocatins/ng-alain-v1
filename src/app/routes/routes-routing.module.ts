@@ -22,14 +22,15 @@ const routes: Routes = [
     {
         path: '',
         component: LayoutBasicComponent,
-        canActivate: [startPageGuard, SimpleGuard],
+        canActivate: [startPageGuard],
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: DashboardComponent, data: { title: '仪表盘', titleI18n: 'dashboard' } },
             { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
             { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
-            { path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule) }
-        ,  { path: 'carts', loadChildren: () => import('./carts/carts.module').then((m) => m.CartsModule) }]
+            { path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule) },
+            { path: 'carts', loadChildren: () => import('./carts/carts.module').then(m => m.CartsModule) }
+        ]
     },
 
     {

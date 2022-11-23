@@ -5,7 +5,5 @@
 <nz-card>
   <sf (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
   <st #st [data]="products" [columns]="columns"></st>
-  <div class="example">
-    <nz-spin nzSimple></nz-spin>
-  </div>
+
 </nz-card>

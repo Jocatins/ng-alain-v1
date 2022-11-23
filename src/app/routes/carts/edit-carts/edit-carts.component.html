@@ -3,31 +3,25 @@
   </ng-template>
 </page-header>
 <nz-card>
-  <h3>Edit Products </h3>
+  <h3>Edit Carts </h3>
 
-  <form nz-form [formGroup]="productsForm" (ngSubmit)="onSubmit($event)">
+  <form nz-form [formGroup]="cartsForm" (ngSubmit)="onSubmit($event)">
     <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>Category</nz-form-label>
+      <nz-form-label [nzSpan]="7" nzRequired>Products</nz-form-label>
       <nz-form-control [nzSpan]="12" nzValidatingTip="Validating...">
-        <input nz-input formControlName="category" placeholder="Category" required />
+        <input nz-input formControlName="products" placeholder="products" required />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>Description</nz-form-label>
-      <nz-form-control [nzSpan]="12">
-        <textarea formControlName="description" nz-input rows="4" placeholder="Description"></textarea>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired nzFor="number">Price</nz-form-label>
+      <nz-form-label [nzSpan]="7" nzRequired nzFor="number">Date</nz-form-label>
       <nz-form-control [nzSpan]="12" nzErrorTip="The input is not valid E-mail!">
-        <input nz-input formControlName="price" placeholder="price" type="number" />
+        <input nz-input formControlName="date" placeholder="date" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>Rating</nz-form-label>
+      <nz-form-label [nzSpan]="7" nzRequired>User-Id</nz-form-label>
       <nz-form-control [nzSpan]="12" nzDisableAutoTips nzErrorTip="Please input your password!">
-        <input nz-input type="text" formControlName="rating" placeholder="rating" />
+        <input nz-input type="number" formControlName="userId" placeholder="userId" />
       </nz-form-control>
     </nz-form-item>
 
