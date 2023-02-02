@@ -2,8 +2,24 @@
   <ng-template #phActionTpl>
   </ng-template>
 </page-header>
+<button nz-button [nzType]="'primary'" (click)="showModal()"><span>Add</span></button>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Add Products" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <nz-form-label [nzSpan]="7" nzRequired>Category</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzValidatingTip="Validating...">
+      <input nz-input formControlName="category" placeholder="Category" required />
+    </nz-form-control>
+    <nz-form-label [nzSpan]="7" nzRequired>Description</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <textarea formControlName="description" nz-input rows="4" placeholder="Description"></textarea>
+    </nz-form-control>
+    <nz-form-label [nzSpan]="7" nzRequired nzFor="number">Price</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="The input is not valid E-mail!">
+      <input nz-input formControlName="price" placeholder="price" type="number" />
+    </nz-form-control>
+  </ng-container>
+</nz-modal>
 <nz-card>
   <sf (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
   <st #st [data]="products" [columns]="columns"></st>
-
 </nz-card>

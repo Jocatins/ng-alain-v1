@@ -34,13 +34,10 @@ export class EditCartsComponent implements OnInit {
             products: [this.cartItem?.products, [Validators.required]]
         });
     }
-    goBack(): void {
+    public goBack(): void {
         this.router.navigateByUrl('carts/log');
     }
-    getGreetings(): string {
-        return 'hello';
-    }
-    onSubmit(data: ICarts) {
+    public onSubmit(data: ICarts) {
         console.log(this.cartsForm.value);
         this.cartsService.updateData(data);
         alert('Submitted Successfully');

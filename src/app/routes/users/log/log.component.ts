@@ -3,7 +3,7 @@ import { STColumn, STComponent, STData, STChange } from '@delon/abc/st';
 
 import { IUsers } from 'src/app/shared/models/IUsers';
 import { UsersService } from '../../../shared/services/users.service';
-
+import { LoadingService, LoadingType } from '@delon/abc/loading';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -13,9 +13,10 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 export class UsersLogComponent implements OnInit {
     public usersList: IUsers[] = [];
 
-    constructor(private usersService: UsersService, private msg: NzMessageService) {}
+    constructor(private usersService: UsersService, private msg: NzMessageService, private loadingSrv: LoadingService) {}
 
     ngOnInit(): void {
+        this.show('spin');
         this.getAllUsers();
     }
     @ViewChild('st') private readonly st!: STComponent;
@@ -81,6 +82,11 @@ export class UsersLogComponent implements OnInit {
         }
     ];
 
+    public show(type: LoadingType): void {
+        this.loadingSrv.open({ type });
+        setTimeout(() => this.loadingSrv.close(), 1000);
+    }
+
     private submit(i: STData): void {
         this.msg.success(JSON.stringify(this.st.pureItem(i)));
         this.updateEdit(i, false);
@@ -95,7 +101,7 @@ export class UsersLogComponent implements OnInit {
 
     getAllUsers(): void {
         this.usersService.getData().subscribe(data => {
-            console.log('data', data);
+            // console.log('data', data);
             this.usersList = data;
         });
     }

@@ -14,8 +14,14 @@ import { ICarts } from 'src/app/shared/models/ICarts';
 })
 export class CartsLogComponent implements OnInit {
     @ViewChild('st') private readonly st!: STComponent;
-
     public carts: ICarts[] = [];
+
+    constructor(private loadingSrv: LoadingService, private cartsService: CartsService, private router: Router) {}
+
+    ngOnInit(): void {
+        this.show('spin');
+        this.getAllCarts();
+    }
 
     columns: STColumn[] = [
         { title: 'id', index: 'id' },
@@ -32,35 +38,36 @@ export class CartsLogComponent implements OnInit {
                         const data: NavigationExtras = { state: { data: { id, products, date, userId } } };
                         this.router.navigate(['/carts/edit-carts'], data);
                     }
+                },
+                {
+                    icon: 'delete',
+                    type: 'static',
+                    pop: {
+                        title: 'Are you sure?',
+                        okType: 'danger',
+                        icon: 'star'
+                    },
+                    click: (item: any) => {
+                        this.cartsService.deleteData(item.id).subscribe(res => {
+                            console.log(res);
+                        });
+                    }
                 }
-                // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
             ]
         }
     ];
 
-    constructor(private loadingSrv: LoadingService, private cartsService: CartsService, private router: Router) {}
-
-    ngOnInit(): void {
-        this.show('spin');
-        this.getAllCarts();
-    }
-    getAllCarts() {
+    public getAllCarts() {
         this.cartsService.getData().subscribe(data => {
             console.log(data);
             this.carts = data;
         });
     }
-    show(type: LoadingType): void {
+    public show(type: LoadingType): void {
         this.loadingSrv.open({ type });
         setTimeout(() => this.loadingSrv.close(), 1000);
     }
-    startEdit(id: string) {
+    public startEdit(id: string) {
         console.log('item');
-    }
-
-    add(): void {
-        // this.modal
-        //   .createStatic(FormEditComponent, { i: { id: 0 } })
-        //   .subscribe(() => this.st.reload());
     }
 }

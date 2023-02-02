@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/cor
 import { Router, ActivatedRoute, ParamMap, NavigationExtras } from '@angular/router';
 import { LoadingService, LoadingType } from '@delon/abc/loading';
 import { STColumn, STComponent } from '@delon/abc/st';
+
 import { IProduct } from 'src/app/shared/models/IProduct';
 import { ProductsService } from '../../../shared/services/products.service';
 
@@ -16,6 +17,7 @@ export class ProductsLogComponent implements OnInit {
     @Output() newEvent = new EventEmitter<string>();
 
     public products: IProduct[] = [];
+    isVisible = false;
 
     constructor(
         private productsService: ProductsService,
@@ -50,8 +52,22 @@ export class ProductsLogComponent implements OnInit {
                         const data: NavigationExtras = { state: { data: { id, description, category, price, rating } } };
                         this.router.navigate(['/products/edit'], data);
                     }
+                },
+                {
+                    icon: 'delete',
+                    type: 'static',
+                    pop: {
+                        title: 'Are you sure?',
+                        okType: 'danger',
+                        icon: 'star'
+                    },
+                    click: (item: any) => {
+                        //    console.log(item);
+                        this.productsService.deleteData(item.id).subscribe(res => {
+                            console.log(res);
+                        });
+                    }
                 }
-                // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
             ]
         }
     ];
@@ -78,7 +94,7 @@ export class ProductsLogComponent implements OnInit {
     // ================CRUD functions ========================>
     getAllProducts(): void {
         this.productsService.getData().subscribe(data => {
-            // console.log(data);
+            console.log('products', data);
             this.products = data;
         });
     }
@@ -98,4 +114,17 @@ export class ProductsLogComponent implements OnInit {
         });
     }
     // =============CRUD functions ========================>
+    // ==============Modal Functions ======================>
+    public showModal(): void {
+        this.isVisible = true;
+    }
+    handleOk(): void {
+        console.log('Button ok clicked!');
+        this.isVisible = false;
+    }
+
+    handleCancel(): void {
+        console.log('Button cancel clicked!');
+        this.isVisible = false;
+    }
 }
