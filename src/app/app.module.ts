@@ -15,20 +15,20 @@ import { DELON_LOCALE, en_US as delonLang } from '@delon/theme';
 import { zhCN as dateLang } from 'date-fns/locale';
 import { NZ_DATE_LOCALE, NZ_I18N, en_US as zorroLang } from 'ng-zorro-antd/i18n';
 const LANG = {
-  abbr: 'en',
-  ng: ngLang,
-  zorro: zorroLang,
-  date: dateLang,
-  delon: delonLang
+    abbr: 'en',
+    ng: ngLang,
+    zorro: zorroLang,
+    date: dateLang,
+    delon: delonLang
 };
 // register angular
 import { registerLocaleData } from '@angular/common';
 registerLocaleData(LANG.ng, LANG.abbr);
 const LANG_PROVIDES = [
-  { provide: LOCALE_ID, useValue: LANG.abbr },
-  { provide: NZ_I18N, useValue: LANG.zorro },
-  { provide: NZ_DATE_LOCALE, useValue: LANG.date },
-  { provide: DELON_LOCALE, useValue: LANG.delon }
+    { provide: LOCALE_ID, useValue: LANG.abbr },
+    { provide: NZ_I18N, useValue: LANG.zorro },
+    { provide: NZ_DATE_LOCALE, useValue: LANG.date },
+    { provide: DELON_LOCALE, useValue: LANG.delon }
 ];
 // #endregion
 
@@ -42,8 +42,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DefaultInterceptor } from '@core';
 import { SimpleInterceptor } from '@delon/auth';
 const INTERCEPTOR_PROVIDES = [
-  { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true }
 ];
 // #endregion
 
@@ -54,16 +54,16 @@ const GLOBAL_THIRD_MODULES: Array<Type<void>> = [];
 // #region Startup Service
 import { StartupService } from '@core';
 export function StartupServiceFactory(startupService: StartupService): () => Observable<void> {
-  return () => startupService.load();
+    return () => startupService.load();
 }
 const APPINIT_PROVIDES = [
-  StartupService,
-  {
-    provide: APP_INITIALIZER,
-    useFactory: StartupServiceFactory,
-    deps: [StartupService],
-    multi: true
-  }
+    StartupService,
+    {
+        provide: APP_INITIALIZER,
+        useFactory: StartupServiceFactory,
+        deps: [StartupService],
+        multi: true
+    }
 ];
 // #endregion
 
@@ -75,24 +75,27 @@ import { RoutesModule } from './routes/routes.module';
 import { SharedModule } from './shared/shared.module';
 import { STWidgetModule } from './shared/st-widget/st-widget.module';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
-  declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    GlobalConfigModule.forRoot(),
-    CoreModule,
-    SharedModule,
-    LayoutModule,
-    RoutesModule,
-    STWidgetModule,
-    NzMessageModule,
-    NzNotificationModule,
-    ...FORM_MODULES,
-    ...GLOBAL_THIRD_MODULES
-  ],
-  providers: [...LANG_PROVIDES, ...INTERCEPTOR_PROVIDES, ...APPINIT_PROVIDES],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        GlobalConfigModule.forRoot(),
+        CoreModule,
+        SharedModule,
+        LayoutModule,
+        RoutesModule,
+        STWidgetModule,
+        NzMessageModule,
+        NzNotificationModule,
+        ...FORM_MODULES,
+        ...GLOBAL_THIRD_MODULES,
+        ReactiveFormsModule
+    ],
+    providers: [...LANG_PROVIDES, ...INTERCEPTOR_PROVIDES, ...APPINIT_PROVIDES],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}

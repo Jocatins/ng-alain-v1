@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { STColumn, STComponent, STData, STChange } from '@delon/abc/st';
-
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { IUsers } from 'src/app/shared/models/IUsers';
 import { UsersService } from '../../../shared/services/users.service';
 import { LoadingService, LoadingType } from '@delon/abc/loading';
@@ -12,12 +12,27 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 })
 export class UsersLogComponent implements OnInit {
     public usersList: IUsers[] = [];
+    public usersForm!: UntypedFormGroup;
+    public isVisible = false;
 
-    constructor(private usersService: UsersService, private msg: NzMessageService, private loadingSrv: LoadingService) {}
+    constructor(
+        private usersService: UsersService,
+        private msg: NzMessageService,
+        private loadingSrv: LoadingService,
+        private fb: UntypedFormBuilder
+    ) {}
 
     ngOnInit(): void {
         this.show('spin');
         this.getAllUsers();
+        this.usersForm = this.fb.group({
+            firstName: [null, Validators.required],
+            lastName: [null, Validators.required],
+            userName: [null, Validators.required],
+            email: [null, Validators.required],
+            phone: [null, Validators.required],
+            city: [null, Validators.required]
+        });
     }
     @ViewChild('st') private readonly st!: STComponent;
     columns: STColumn[] = [
@@ -39,22 +54,7 @@ export class UsersLogComponent implements OnInit {
             title: 'Actions',
             buttons: [
                 {
-                    icon: 'edit',
-                    text: 'Edit',
-                    iif: i => !i.edit,
-                    click: i => this.updateEdit(i, true)
-                },
-                {
-                    text: `Save`,
-                    iif: i => i.edit,
-                    click: i => {
-                        this.submit(i);
-                    }
-                },
-                {
-                    text: `Cancel`,
-                    iif: i => i.edit,
-                    click: i => this.updateEdit(i, false)
+                    text: 'Edit'
                 },
                 {
                     icon: 'delete',
@@ -65,16 +65,10 @@ export class UsersLogComponent implements OnInit {
                         icon: 'star'
                     },
                     click: (item: any) => {
-                        // ===========Fake Store method ================
-                        // console.log('clicked id', item?.id);
-                        // fetch(`https://fakestoreapi.com/users/${item.id}`, {
-                        //   method: 'DELETE'
-                        // })
-                        //   .then(res => res.json())
-                        //   .then(json => console.log(json));
-                        // ========= Angular Method ===================
+                        //    console.log(item);
                         this.usersService.deleteData(item.id).subscribe(res => {
                             console.log(res);
+                            this.getAllUsers();
                         });
                     }
                 }
@@ -86,23 +80,37 @@ export class UsersLogComponent implements OnInit {
         this.loadingSrv.open({ type });
         setTimeout(() => this.loadingSrv.close(), 1000);
     }
-
-    private submit(i: STData): void {
-        this.msg.success(JSON.stringify(this.st.pureItem(i)));
-        this.updateEdit(i, false);
-    }
-
-    private updateEdit(i: STData, edit: boolean): void {
-        this.st.setRow(i, { edit }, { refreshSchema: true });
-    }
-    change(e: STChange): void {
-        console.log(e);
+    public submitData() {
+        if (this.usersForm.valid) {
+            this.usersService.postData(this.usersForm.value).subscribe({
+                next: res => {
+                    alert('Product added successfully');
+                    this.usersForm.reset();
+                    this.handleCancel();
+                    this.getAllUsers();
+                },
+                error: () => {
+                    alert('Error while adding product');
+                }
+            });
+        }
     }
 
     getAllUsers(): void {
         this.usersService.getData().subscribe(data => {
-            // console.log('data', data);
+            console.log('data', data);
             this.usersList = data;
         });
+    }
+    public showModal(): void {
+        this.isVisible = true;
+    }
+    handleOk(): void {
+        this.isVisible = false;
+    }
+
+    handleCancel(): void {
+        //     console.log('Button cancel clicked!');
+        this.isVisible = false;
     }
 }

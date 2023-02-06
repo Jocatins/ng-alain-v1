@@ -1,12 +1,12 @@
 {
   "app": {
-    "name": "Alain",
+    "name": "Titan",
     "description": "Ng-zorro admin panel front-end framework"
   },
   "user": {
-    "name": "Admin",
+    "name": "Titan",
     "avatar": "./assets/tmp/img/avatar.jpg",
-    "email": "cipchk@qq.com"
+    "email": "sphinx-net@planet.com"
   },
   "menu": [
     {

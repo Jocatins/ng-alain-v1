@@ -5,7 +5,7 @@ import { IProduct } from '../models/IProduct';
 
 @Injectable()
 export class ProductsService {
-    private apiUrl: string = 'https://fakestoreapi.com/products';
+    private apiUrl: string = 'http://localhost:5000/products';
 
     constructor(private http: HttpClient) {}
 

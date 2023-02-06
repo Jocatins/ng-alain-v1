@@ -2,34 +2,44 @@
   <ng-template #phActionTpl>
   </ng-template>
 </page-header>
+<button nz-button [nzType]="'primary'" (click)="showModal()"><span>Add</span></button>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Add User" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <form nz-form [formGroup]="usersForm">
+    <ng-container *nzModalContent>
+      <!-- Input for First Name -->
+      <nz-form-label [nzSpan]="7" nzRequired>First Name</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzValidatingTip="Validating...">
+        <input nz-input formControlName="firstName" placeholder="First Name" required />
+      </nz-form-control>
+      <!-- Input for Last Name -->
+      <nz-form-label [nzSpan]="7" nzRequired>Last Name</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <input nz-input formControlName="lastName" placeholder="Last Name" type="text" />
+      </nz-form-control>
+      <!-- Input for UserName -->
+      <nz-form-label [nzSpan]="7" nzRequired nzFor="number">UserName</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="The input is not valid E-mail!">
+        <input nz-input formControlName="userName" placeholder="UserName" type="text" />
+      </nz-form-control>
+      <!-- Input for Email -->
+      <nz-form-label [nzSpan]="7" nzRequired nzFor="number">Email</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="The input is not valid E-mail!">
+        <input nz-input formControlName="email" placeholder="Email" type="email" />
+      </nz-form-control>
+      <!-- Input for Phone -->
+      <nz-form-label [nzSpan]="7" nzRequired nzFor="number">Phone</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="The input is not valid E-mail!">
+        <input nz-input formControlName="phone" placeholder="Phone" type="tel" />
+      </nz-form-control>
+      <!-- Input for City -->
+      <nz-form-label [nzSpan]="7" nzRequired nzFor="number">City</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="The input is not valid E-mail!">
+        <input nz-input formControlName="city" placeholder="City" type="text" />
+      </nz-form-control>
+    </ng-container>
+  </form>
+</nz-modal>
 <nz-card>
-  <st #st [data]="usersList" [columns]="columns">
-    <ng-template st-row="firstname" let-item let-index="index">
-      <input *ngIf="item.edit" nz-input [ngModel]="item.firstname"
-        (ngModelChange)="st.setRow(index, { firstname: $event })" />
-      <ng-container *ngIf="!item.edit">{{ item.firstname }}</ng-container>
-    </ng-template>
-    <ng-template st-row="lastname" let-item let-index="index">
-      <input *ngIf="item.edit" nz-input [ngModel]="item.lastname"
-        (ngModelChange)="st.setRow(index, { lastname: $event })" />
-      <ng-container *ngIf="!item.edit">{{ item.lastname }}</ng-container>
-    </ng-template>
-    <ng-template st-row="username" let-item let-index="index">
-      <input *ngIf="item.edit" nz-input [ngModel]="item.username"
-        (ngModelChange)="st.setRow(index, { username: $event })" />
-      <ng-container *ngIf="!item.edit">{{ item.username }}</ng-container>
-    </ng-template>
-    <ng-template st-row="email" let-item let-index="index">
-      <input *ngIf="item.edit" nz-input [ngModel]="item.email" (ngModelChange)="st.setRow(index, { email: $event })" />
-      <ng-container *ngIf="!item.edit">{{ item.email }}</ng-container>
-    </ng-template>
-    <ng-template st-row="phone" let-item let-index="index">
-      <input *ngIf="item.edit" nz-input [ngModel]="item.phone" (ngModelChange)="st.setRow(index, { phone: $event })" />
-      <ng-container *ngIf="!item.edit">{{ item.phone }}</ng-container>
-    </ng-template>
-    <ng-template st-row="city" let-item let-index="index">
-      <input *ngIf="item.edit" nz-input [ngModel]="item.city" (ngModelChange)="st.setRow(index, { city: $event })" />
-      <ng-container *ngIf="!item.edit">{{ item.city }}</ng-container>
-    </ng-template>
-  </st>
+  <sf (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
+  <st #st [data]="usersList" [columns]="columns"></st>
 </nz-card>

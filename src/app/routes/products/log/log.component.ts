@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap, NavigationExtras } from '@angular/router';
 import { LoadingService, LoadingType } from '@delon/abc/loading';
 import { STColumn, STComponent } from '@delon/abc/st';
@@ -17,18 +18,26 @@ export class ProductsLogComponent implements OnInit {
     @Output() newEvent = new EventEmitter<string>();
 
     public products: IProduct[] = [];
-    isVisible = false;
+    public isVisible = false;
+    public productForm!: UntypedFormGroup;
 
     constructor(
         private productsService: ProductsService,
         private loadingSrv: LoadingService,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private fb: UntypedFormBuilder
     ) {}
 
     ngOnInit(): void {
         this.show('spin');
         this.getAllProducts();
+        this.productForm = this.fb.group({
+            category: ['', Validators.required],
+            description: ['', Validators.required],
+            price: ['', Validators.required],
+            rating: ['', Validators.required]
+        });
     }
     addItem(value: any) {
         this.newEvent.emit(value);
@@ -40,7 +49,7 @@ export class ProductsLogComponent implements OnInit {
         { title: 'Image', type: 'img', width: '50px', index: 'image' },
         { title: 'Rating', type: 'number', index: 'rating.rate' },
         {
-            title: '',
+            title: 'Actions',
             buttons: [
                 {
                     text: 'Edit',
@@ -65,6 +74,7 @@ export class ProductsLogComponent implements OnInit {
                         //    console.log(item);
                         this.productsService.deleteData(item.id).subscribe(res => {
                             console.log(res);
+                            this.getAllProducts();
                         });
                     }
                 }
@@ -77,20 +87,22 @@ export class ProductsLogComponent implements OnInit {
         setTimeout(() => this.loadingSrv.close(), 1000);
     }
 
-    submitData(value: IProduct) {
-        let body = {
-            price: value.price,
-            title: value.category,
-            description: value.description
-        };
+    public submitData() {
+        if (this.productForm.valid) {
+            this.productsService.postData(this.productForm.value).subscribe({
+                next: res => {
+                    alert('Product added successfully');
+                    this.productForm.reset();
+                    this.handleCancel();
+                    this.getAllProducts();
+                },
+                error: () => {
+                    alert('Error while adding product');
+                }
+            });
+        }
     }
-    updateData(value: IProduct) {
-        let body = {
-            price: value.price,
-            title: value.category,
-            description: value.description
-        };
-    }
+
     // ================CRUD functions ========================>
     getAllProducts(): void {
         this.productsService.getData().subscribe(data => {
@@ -119,12 +131,12 @@ export class ProductsLogComponent implements OnInit {
         this.isVisible = true;
     }
     handleOk(): void {
-        console.log('Button ok clicked!');
+        console.log(this.productForm.value);
         this.isVisible = false;
     }
 
     handleCancel(): void {
-        console.log('Button cancel clicked!');
+        //     console.log('Button cancel clicked!');
         this.isVisible = false;
     }
 }

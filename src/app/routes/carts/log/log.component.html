@@ -2,6 +2,7 @@
   <ng-template #phActionTpl>
   </ng-template>
 </page-header>
+<button nz-button [nzType]="'primary'"><span>Add</span></button>
 <nz-card>
   <sf (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
   <st #st [data]="carts" [columns]="columns"></st>

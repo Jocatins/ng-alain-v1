@@ -64,9 +64,9 @@ export class StartupService {
             description: `Ng-zorro admin panel front-end framework`
         };
         const user: any = {
-            name: 'Admin',
+            name: 'Titan',
             avatar: './assets/tmp/img/avatar.jpg',
-            email: 'cipchk@qq.com',
+            email: 'sphinx@planet.co',
             token: '123456789'
         };
         // Application information: including site name, description, year
