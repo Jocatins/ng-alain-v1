@@ -14,6 +14,7 @@ import { default as ngLang } from '@angular/common/locales/en';
 import { DELON_LOCALE, en_US as delonLang } from '@delon/theme';
 import { zhCN as dateLang } from 'date-fns/locale';
 import { NZ_DATE_LOCALE, NZ_I18N, en_US as zorroLang } from 'ng-zorro-antd/i18n';
+
 const LANG = {
     abbr: 'en',
     ng: ngLang,

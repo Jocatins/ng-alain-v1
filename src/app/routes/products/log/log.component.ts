@@ -3,8 +3,8 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms
 import { Router, ActivatedRoute, ParamMap, NavigationExtras } from '@angular/router';
 import { LoadingService, LoadingType } from '@delon/abc/loading';
 import { STColumn, STComponent } from '@delon/abc/st';
-
 import { IProduct } from 'src/app/shared/models/IProduct';
+
 import { ProductsService } from '../../../shared/services/products.service';
 
 // Child component
@@ -15,6 +15,7 @@ import { ProductsService } from '../../../shared/services/products.service';
 export class ProductsLogComponent implements OnInit {
     @ViewChild('st') private readonly st!: STComponent;
 
+    // eslint-disable-next-line @angular-eslint/prefer-output-readonly
     @Output() newEvent = new EventEmitter<string>();
 
     public products: IProduct[] = [];

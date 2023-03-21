@@ -1,25 +1,26 @@
+<!-- eslint-disable prettier/prettier -->
 <page-header [action]="phActionTpl">
   <ng-template #phActionTpl>
   </ng-template>
 </page-header>
 <button nz-button [nzType]="'primary'" (click)="showModal()"><span>Add</span></button>
-<nz-modal [(nzVisible)]="isVisible" nzTitle="Add User" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Add User" (nzOnCancel)="handleCancel()" (nzOnOk)="submitData()">
   <form nz-form [formGroup]="usersForm">
     <ng-container *nzModalContent>
       <!-- Input for First Name -->
       <nz-form-label [nzSpan]="7" nzRequired>First Name</nz-form-label>
       <nz-form-control [nzSpan]="12" nzValidatingTip="Validating...">
-        <input nz-input formControlName="firstName" placeholder="First Name" required />
+        <input nz-input formControlName="firstname" placeholder="First Name" required />
       </nz-form-control>
       <!-- Input for Last Name -->
       <nz-form-label [nzSpan]="7" nzRequired>Last Name</nz-form-label>
       <nz-form-control [nzSpan]="12">
-        <input nz-input formControlName="lastName" placeholder="Last Name" type="text" />
+        <input nz-input formControlName="lastname" placeholder="Last Name" type="text" />
       </nz-form-control>
       <!-- Input for UserName -->
       <nz-form-label [nzSpan]="7" nzRequired nzFor="number">UserName</nz-form-label>
       <nz-form-control [nzSpan]="12" nzErrorTip="The input is not valid E-mail!">
-        <input nz-input formControlName="userName" placeholder="UserName" type="text" />
+        <input nz-input formControlName="username" placeholder="UserName" type="text" />
       </nz-form-control>
       <!-- Input for Email -->
       <nz-form-label [nzSpan]="7" nzRequired nzFor="number">Email</nz-form-label>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { UsersService } from '../../../../shared/services/users.service';
 import { IUsers } from 'src/app/shared/models/IUsers';
+
+import { UsersService } from '../../../../shared/services/users.service';
 
 @Component({
     selector: 'app-add-user',
@@ -22,7 +23,7 @@ export class AddUserAddUserFormComponent implements OnInit {
             password: [null, [Validators.required]],
             mobile: [null, [Validators.required]],
             email: [null, [Validators.required]],
-            remember: [true]
+            remember: [null]
         });
     }
     onSubmit(): void {

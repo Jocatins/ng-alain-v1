@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { STColumn, STComponent, STData, STChange } from '@delon/abc/st';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { IUsers } from 'src/app/shared/models/IUsers';
-import { UsersService } from '../../../shared/services/users.service';
 import { LoadingService, LoadingType } from '@delon/abc/loading';
+import { STColumn, STComponent, STData, STChange } from '@delon/abc/st';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { IUsers } from 'src/app/shared/models/IUsers';
+
+import { UsersService } from '../../../shared/services/users.service';
 
 @Component({
     selector: 'app-users-log',
@@ -26,9 +27,9 @@ export class UsersLogComponent implements OnInit {
         this.show('spin');
         this.getAllUsers();
         this.usersForm = this.fb.group({
-            firstName: [null, Validators.required],
-            lastName: [null, Validators.required],
-            userName: [null, Validators.required],
+            firstname: [null, Validators.required],
+            lastname: [null, Validators.required],
+            username: [null, Validators.required],
             email: [null, Validators.required],
             phone: [null, Validators.required],
             city: [null, Validators.required]
@@ -37,7 +38,7 @@ export class UsersLogComponent implements OnInit {
     @ViewChild('st') private readonly st!: STComponent;
     columns: STColumn[] = [
         { title: 'Id', index: 'id' },
-        { title: 'First Name', index: 'name.firstname', render: 'name.firstname' },
+        { title: 'First Name', index: 'name.firstname', render: 'firstname' },
         { title: 'Last Name', index: 'name.lastname', render: 'lastname' },
         {
             title: 'Username',
@@ -81,16 +82,17 @@ export class UsersLogComponent implements OnInit {
         setTimeout(() => this.loadingSrv.close(), 1000);
     }
     public submitData() {
+        //    console.log(this.usersForm.value);
         if (this.usersForm.valid) {
             this.usersService.postData(this.usersForm.value).subscribe({
                 next: res => {
-                    alert('Product added successfully');
+                    alert('User added successfully');
                     this.usersForm.reset();
                     this.handleCancel();
                     this.getAllUsers();
                 },
                 error: () => {
-                    alert('Error while adding product');
+                    alert('Error while adding User');
                 }
             });
         }
